@@ -40,16 +40,16 @@ class ToolDefinition:
                 # 如果是协程，使用事件循环运行它
                 try:
                     loop = asyncio.get_event_loop()
-                except RuntimeError:
+                except RuntimeError:o
                     # 如果没有事件循环，则创建一个新的事件循环
-                    loop = asyncio.new_event_lop()
+                    loop = asyncio.new_event_loop()
                     asyncio.set_event_loop(loop)
 
                 # 运行协程并获取结果
                 if loop.is_running():
                     # 如果事件循环已经在运行，则创建一个新的事件循环来运行协程
                     # 这是FastAPI这样的异步框架中是必要的
-                    result = asyncio.run_corotine_threadsafe(result, loop).result()
+                    result = asyncio.run_coroutine_threadsafe(result, loop).result()
                 else:
                     # 如果事件循环没有运行，则直接使用它来运行协程
                     result = loop.run_until_complete(result)
@@ -71,10 +71,10 @@ class ToolDefinition:
         # 如果有参数模式，则添加参数信息
         if self.params_schema:
             # 检查params_schema是否为类而不是函数
-            if hasattr(self.params_schama, 'model_json_schema'):
+            if hasattr(self.params_schema, 'model_json_schema'):
                 schema = self.params_schema.model_json_schema()
                 result["parameters"] = schema.get("properties", {})
-                result ["required"] = schema.get("required", [])
+                result["required"] = schema.get("required", [])
             else:
                 # 如果是函数或其他类型，则添加简单的参数描述
                 result["parameters"] = {
@@ -108,7 +108,7 @@ class MCPSession:
 
 class MCPMessage(BaseModel):
     """MCP 消息模型"""
-    message_id: str = FieldI(default_factory=lambda: str(uuid.uuid4()))
+    message_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     tool_name: str
     arguments: Dict[str, Any] = {}
     authentication_key: Optional[str] = None

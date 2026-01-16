@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     CSV_FILES_DIR: str = "./data/csv"
 
     # MCP 相关配置
-    ALLOWD_TOOLS: LIST[str] = [
+    ALLOWD_TOOLS: List[str] = [
         "excel_list",
         "excel_read",
         "excel_info",

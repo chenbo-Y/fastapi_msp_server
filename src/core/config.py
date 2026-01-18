@@ -1,6 +1,6 @@
 from typing import Optional, List
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field
+# from pydantic import Field
 
 class Settings(BaseSettings):
     # 项目基本配置
@@ -33,6 +33,6 @@ class Settings(BaseSettings):
     # n8n 集成设置
     N8N_INTEGRATION_ENABLED: bool = False
     N8N_URL: str = "http://localhost:5678"
-    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding='utf-8', case_sensitive=True)
 
 settings = Settings()

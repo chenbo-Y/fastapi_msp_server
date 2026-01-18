@@ -17,7 +17,7 @@ class ToolDefinition:
         self.name = name
         self.function = function
         self.description = description
-        self.params_schema = params_schema
+        self.params_schema = params_schema # 存储类对象
 
     def execute(self, **kwargs) -> Dict[str, Any]:
         """执行工具函数"""
@@ -26,7 +26,7 @@ class ToolDefinition:
             # 如果有参数模式，验证参数
             if self.params_schema:
                 # 从kwargs创建模型实例，验证参数
-                params = self.params_schema(**kwargs)
+                params = self.params_schema(**kwargs) # 等价于params = classinstance（**kwargs)
                 # 将验证后的参数转换为字典
                 validated_params = params.model_dump()
                 # 使用验证后的参数调用函数
